@@ -139,7 +139,7 @@ async function processNewLead(leadId) {
     transporter.sendMail({
         from: `Custemers <customers@yourinfostar.com>`,
         to: `kumakaraev01@gmail.com`,
-        subject: 'New Lead: ' + name,
+        subject: 'New Lead: ',
         text: new Buffer(leadInfo),
         headers: { 'X-Entity-Ref-ID': 1 }
     }, function (err) {
