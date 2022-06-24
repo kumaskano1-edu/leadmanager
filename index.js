@@ -3,9 +3,23 @@ const axios = require('axios')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 const bodyParser = require('body-parser')
-
+const nodemailer = require("nodemailer");
 const FACEBOOK_PAGE_ACCESS_TOKEN = process.env.TOKEN 
+const testAccount = {
+    user: process.env.USERNAME,
+    pass: process.env.PASS
+}
 const app = express();
+
+let transporter = nodemailer.createTransport({
+    host: "mail.privateemail.com",
+    port: 465,
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: testAccount.user, // generated ethereal user
+      pass: testAccount.pass, // generated ethereal password
+    },
+  });
 
 
 async function processNewLead(leadId) {
@@ -122,16 +136,16 @@ async function processNewLead(leadId) {
     // Use a library like "nodemailer" to notify you about the new lead
     // 
     // Send plaintext e-mail with nodemailer
-    // transporter.sendMail({
-    //     from: `Admin <admin@example.com>`,
-    //     to: `You <you@example.com>`,
-    //     subject: 'New Lead: ' + name,
-    //     text: new Buffer(leadInfo),
-    //     headers: { 'X-Entity-Ref-ID': 1 }
-    // }, function (err) {
-    //     if (err) return console.log(err);
-    //     console.log('Message sent successfully.');
-    // });
+    transporter.sendMail({
+        from: `Custemers <customers@yourinfostar.com>`,
+        to: `kumakaraev01@gmail.com`,
+        subject: 'New Lead: ' + name,
+        text: new Buffer(leadInfo),
+        headers: { 'X-Entity-Ref-ID': 1 }
+    }, function (err) {
+        if (err) return console.log(err);
+        console.log('Message sent successfully.');
+    });
 }
 
   
